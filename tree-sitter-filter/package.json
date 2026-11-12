@@ -1,0 +1,12 @@
+{
+  "name": "tree-sitter-filter",
+  "version": "0.1.0",
+  "description": "Filter DSL grammar for tree-sitter",
+  "main": "bindings/node",
+  "keywords": [
+    "tree-sitter",
+    "filter"
+  ],
+  "author": "Mahasiswa",
+  "license": "MIT"
+}
