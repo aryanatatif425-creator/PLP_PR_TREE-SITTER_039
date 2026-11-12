@@ -1,0 +1,93 @@
+============================================================
+TUGAS 1: PERBANDINGAN PREDIKSI VS AKTUAL
+============================================================
+
+--- Potongan 1: Fungsi ---
+Kode Sumber:
+def tambah(a, b):
+    return a + b
+
+Pohon Prediksi:
+(module (function_definition name: (identifier) parameters: (parameters (identifier) (identifier)) body: (block (return_statement (binary_operator left: (identifier) right: (identifier))))))
+
+Pohon Aktual (tree.root_node):
+(module (function_definition name: (identifier) parameters: (parameters (identifier) (identifier)) body: (block (return_statement (binary_operator left: (identifier) right: (identifier))))))
+Prediksi Sesuai Aktual? YA
+
+--- Potongan 2: Kondisional (if/else) ---
+Kode Sumber:
+if x > 0:
+    y = 1
+else:
+    y = -1
+
+Pohon Prediksi:
+(module (if_statement condition: (comparison_operator left: (identifier) right: (integer)) consequence: (block (expression_statement (assignment left: (identifier) right: (integer)))) alternative: (else_clause (block (expression_statement (assignment left: (identifier) right: (unary_operator argument: (integer))))))))
+
+Pohon Aktual (tree.root_node):
+(module (if_statement condition: (comparison_operator (identifier) (integer)) consequence: (block (expression_statement (assignment left: (identifier) right: (integer)))) alternative: (else_clause body: (block (expression_statement (assignment left: (identifier) right: (unary_operator argument: (integer))))))))
+Prediksi Sesuai Aktual? BEDA SEDIKIT (Cek detail)
+
+--- Potongan 3: Kelas dengan Satu Method ---
+Kode Sumber:
+class Persegi:
+    def luas(self):
+        return self.sisi * self.sisi
+
+Pohon Prediksi:
+(module (class_definition name: (identifier) body: (block (function_definition name: (identifier) parameters: (parameters (identifier)) body: (block (return_statement (binary_operator left: (attribute object: (identifier) attribute: (identifier)) right: (attribute object: (identifier) attribute: (identifier)))))))))
+
+Pohon Aktual (tree.root_node):
+(module (class_definition name: (identifier) body: (block (function_definition name: (identifier) parameters: (parameters (identifier)) body: (block (return_statement (binary_operator left: (attribute object: (identifier) attribute: (identifier)) right: (attribute object: (identifier) attribute: (identifier)))))))))
+Prediksi Sesuai Aktual? YA
+============================================================
+IDENTIFIKASI NODE BERNAMA VS NODE ANONIM
+============================================================
+Kode: def tambah(a, b): return a + b
+
+Anak-anak langsung dari function_definition (menggunakan .children):
+  - Node: 'def'           [ANONIM ] teks: 'def'
+  - Node: 'identifier'    [BERNAMA] teks: 'tambah'
+  - Node: 'parameters'    [BERNAMA] teks: '(a, b)'
+  - Node: ':'             [ANONIM ] teks: ':'
+  - Node: 'block'         [BERNAMA] teks: 'return a + b'
+
+Anak-anak di dalam node 'parameters':
+  - Node: '('             [ANONIM ] teks: '('
+  - Node: 'identifier'    [BERNAMA] teks: 'a'
+  - Node: ','             [ANONIM ] teks: ','
+  - Node: 'identifier'    [BERNAMA] teks: 'b'
+  - Node: ')'             [ANONIM ] teks: ')'
+
+Node Anonim yang ditemukan (minimal 3):
+  * Token anonim: '(' (tipe grammar: '(')
+  * Token anonim: ')' (tipe grammar: ')')
+  * Token anonim: ':' (tipe grammar: ':')
+  * Token anonim: 'def' (tipe grammar: 'def')
+  * Token anonim: ',' (tipe grammar: ',')
+============================================================
+PENGUJIAN ERROR RECOVERY (SINTAKS RUSAK)
+============================================================
+Kasus 1: Tanda kurung tutup ')' hilang pada definisi fungsi:
+Kode: 'def tambah(a, b\n    return a + b\n'
+Pohon: (module (ERROR (identifier) (identifier) (identifier) (identifier) (identifier) (identifier)))
+Memiliki error? True
+
+Kasus 2: Tanda titik dua ':' hilang setelah header fungsi:
+Kode: 'def tambah(a, b)\n    return a + b\n'
+Pohon: (module (ERROR (identifier) (parameters (identifier) (identifier)) (return_statement (binary_operator left: (identifier) right: (identifier)))))
+Memiliki error? True
+============================================================
+PENJELASAN PERBEDAAN .children VS .named_children
+============================================================
+Node target: function_definition (def tambah(a, b):)
+Total .children       : 5 node -> ['def', 'identifier', 'parameters', ':', 'block']
+Total .named_children : 3 node -> ['identifier', 'parameters', 'block']
+
+Penjelasan:
+- `children` mencakup SELURUH token yang ada pada Concrete Syntax Tree (CST),
+  termasuk node literal/anonim seperti 'def', ':', '(', ')', dan koma ','.
+- `named_children` hanya menyaring node bernama (bermakna semantik/sintaksis tinggi)
+  yang didefinisikan sebagai rule bernilai di grammar, seperti 'identifier',
+  'parameters', dan 'block', serta menyembunyikan tanda baca/simbol pembatas.
+
