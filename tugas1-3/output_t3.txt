@@ -1,0 +1,56 @@
+======================================================================
+TUGAS 3: UJI LENGKAP QUERY PADA FILE UJI
+Target: uji_100_baris.py
+======================================================================
+
+--- 1. Fungsi dan Jumlah Parameternya ---
+  * Fungsi `__init__` (baris 19) -> 4 parameter: ['self', 'username: str', 'email: str', 'role: str = Role.VIEWER']
+  * Fungsi `ubah_role` (baris 26) -> 2 parameter: ['self', 'role_baru: str']
+  * Fungsi `nonaktifkan` (baris 35) -> 1 parameter: ['self']
+  * Fungsi `__init__` (baris 42) -> 1 parameter: ['self']
+  * Fungsi `_hitung_hash` (baris 46) -> 2 parameter: ['self', 'sandi: str']
+  * Fungsi `daftarkan_pengguna` (baris 49) -> 5 parameter: ['self', 'username: str', 'email: str', 'sandi: str', 'role: str = Role.VIEWER']
+  * Fungsi `login` (baris 65) -> 3 parameter: ['self', 'username: str', 'sandi: str']
+  * Fungsi `list_pengguna_aktif` (baris 83) -> 1 parameter: ['self']
+  * Fungsi `fungsi_demo_utama` (baris 90) -> 0 parameter: []
+Total fungsi terdeteksi: 9
+
+--- 2. Pemanggilan print(...) ---
+  * Baris  31: print(f"Role pengguna {self.username} diubah menjadi {role_baru}")
+  * Baris  33: print(f"Error: Role {role_baru} tidak valid")
+  * Baris  38: print(f"Akun {self.username} telah dinonaktifkan")
+  * Baris  52: print(f"Peringatan: Username {username} sudah digunakan!")
+  * Baris  56: print("Gagal: Kata sandi minimal harus 6 karakter")
+  * Baris  62: print(f"Sukses mendaftarkan pengguna: {username}")
+  * Baris  68: print("Login gagal: Pengguna tidak ditemukan")
+  * Baris  73: print("Login gagal: Akun berstatus nonaktif")
+  * Baris  77: print(f"Login berhasil! Selamat datang {username}")
+  * Baris  80: print("Login gagal: Kata sandi salah")
+  * Baris 105: print("Hasil login gagal:", pengguna_salah)
+  * Baris 108: print(f"Total pengguna aktif: {len(daftar)}")
+  * Baris 111: print("Menjalankan demo sistem autentikasi...")
+Total pemanggilan print(): 13
+
+--- 3. Modul yang di-import (import & from ... import) ---
+  * Baris  6: modul `os`
+  * Baris  7: modul `sys`
+  * Baris  8: modul `hashlib`
+  * Baris  9: modul `datetime`
+  * Baris 10: modul `typing`
+Total import modul: 5
+
+--- 4. [Pengayaan] Docstring Baris Pertama Body Fungsi ---
+  * Fungsi `ubah_role` (baris 27): """Mengubah role pengguna jika valid."""
+  * Fungsi `nonaktifkan` (baris 36): """Menonaktifkan akun pengguna."""
+  * Fungsi `daftarkan_pengguna` (baris 50): """Mendaftarkan akun baru jika username belum terdaftar."""
+  * Fungsi `login` (baris 66): """Melakukan login dan verifikasi hash kata sandi."""
+  * Fungsi `fungsi_demo_utama` (baris 91): """Fungsi utama demonstrasi alur autentikasi."""
+Total docstring fungsi ditemukan: 5
+
+======================================================================
+VERIFIKASI HASIL QUERY VS HITUNGAN MANUAL
+======================================================================
+1. Fungsi & Parameter : Query =  9 | Manual =  9 -> COCOK (PASS)
+2. Pemanggilan print  : Query = 13 | Manual = 13 -> COCOK (PASS)
+3. Import Modul       : Query =  5 | Manual =  5 -> COCOK (PASS)
+4. Docstring Fungsi   : Query =  5 | Manual =  5 -> COCOK (PASS)
