@@ -1,0 +1,101 @@
+==================
+and lebih kuat dari or
+==================
+
+status = "open" or priority > 2 and owner = "budi"
+
+---
+
+(query
+  (or_expression
+    left: (comparison
+      field: (identifier)
+      value: (string))
+    right: (and_expression
+      left: (comparison
+        field: (identifier)
+        value: (number))
+      right: (comparison
+        field: (identifier)
+        value: (string)))))
+
+==================
+kurung mengalahkan prioritas default
+==================
+
+(a = 1 or b = 2) and c = 3
+
+---
+
+(query
+  (and_expression
+    left: (parenthesized
+      (or_expression
+        left: (comparison
+          field: (identifier)
+          value: (number))
+        right: (comparison
+          field: (identifier)
+          value: (number))))
+    right: (comparison
+      field: (identifier)
+      value: (number))))
+
+==================
+negasi dengan not dan boolean
+==================
+
+not archived = true
+
+---
+
+(query
+  (not_expression
+    operand: (comparison
+      field: (identifier)
+      value: (boolean))))
+
+==================
+operator perbandingan dan desimal
+==================
+
+score >= 85.5 and rating != 0
+
+---
+
+(query
+  (and_expression
+    left: (comparison
+      field: (identifier)
+      value: (number))
+    right: (comparison
+      field: (identifier)
+      value: (number))))
+
+==================
+in expression dengan tiga nilai
+==================
+
+status in ("open", "pending", "closed")
+
+---
+
+(query
+  (in_expression
+    field: (identifier)
+    (string)
+    (string)
+    (string)))
+
+==================
+contains expression pencarian teks
+==================
+
+title contains "invoice"
+
+---
+
+(query
+  (contains_expression
+    field: (identifier)
+    value: (string)))
